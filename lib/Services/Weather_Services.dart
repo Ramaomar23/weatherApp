@@ -1,19 +1,19 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import '../Model/weather_model.dart';
+import '../Model/Weather_model.dart';
 
 class WeatherService {
-  final String apiKey = "73e275f2d88e6aa0d4abb6072082dac2";
-  final String baseUrl = "http://api.weatherstack.com";
+  final String apiKey = "55ed8a6ec6554cf1ab902157252109";
+  final String baseUrl = "http://api.weatherapi.com/v1";
 
   Map<String, String> favoriteCities = {};
   Map<String, String> cityNotes = {};
-  Map<String, int> favoriteTemperatures = {};
+  Map<String, double> favoriteTemperatures = {};
 
   // GET
   Future<Weather> fetchWeather(String city) async {
     final response = await http.get(
-      Uri.parse("$baseUrl/current?access_key=$apiKey&query=$city"),
+      Uri.parse("$baseUrl/current.json?key=$apiKey&q=$city&aqi=no"),
     );
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
@@ -23,30 +23,30 @@ class WeatherService {
     }
   }
 
-  // PATCH (add or update note)
+  // PATCH
   Future<void> patchNote(String city, String note) async {
     cityNotes[city] = note;
   }
 
-  // POST (dummy example)
+  // POST
   Future<Weather> addCity(String city) async {
     final response = await http.post(
-      Uri.parse("$baseUrl/current?access_key=$apiKey&query=$city"),
+      Uri.parse("$baseUrl/current.json?key=$apiKey&q=$city&aqi=no"),
       body: jsonEncode({"country": "New city has been created"}),
     );
     return fetchWeather(city);
   }
 
-  // DELETE (dummy example)
+  // DELETE
   Future<Weather> deleteCity(String city) async {
     final response = await http.delete(
-      Uri.parse("$baseUrl/current?access_key=$apiKey&query=$city"),
+      Uri.parse("$baseUrl/current.json?key=$apiKey&q=$city&aqi=no"),
     );
     return fetchWeather(city);
   }
 
-  // Toggle favorite
-  void toggleFavorite(String city, int temp) {
+  //  favorite
+  void toggleFavorite(String city,double temp) {
     if (favoriteCities.containsKey(city)) {
       favoriteCities.remove(city);
       favoriteTemperatures.remove(city);
