@@ -89,6 +89,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                       ),
                     ],
                   ),
+            //.............................Search for a city .......................................
                   child: TextField(
                     controller: _controller,
                     decoration: const InputDecoration(
@@ -104,6 +105,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
               ),
               const SizedBox(height: 9),
               Text(_result),
+
               Expanded(
                 child: Center(
                   child: FutureBuilder<Weather>(
@@ -119,6 +121,8 @@ class _WeatherScreenState extends State<WeatherScreen> {
                         final weather = snapshot.data!;
                         final isfav =
                         weatherService.favoriteCities.containsKey(weather.city);
+
+        //.....................................City Card..................................................
 
                         return SingleChildScrollView(
                           child: Column(
@@ -166,7 +170,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                                         const SizedBox(height: 7),
                                         Text("${weather.temperature.toStringAsFixed(1)}°C",
                                             style: const TextStyle(
-                                                fontSize: 30,
+                                                fontSize: 40,
                                                 fontWeight: FontWeight.bold)),
                                         Text(
                                             "${weather.country} • ${weather.localtime}",
@@ -202,6 +206,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                                   ),
                                 ),
                               ),
+                          //............................List Favorite City......................................
                               const SizedBox(height: 5),
                               for (var fav
                               in weatherService.favoriteCities.keys)
@@ -222,6 +227,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                                       ),
                                     ],
                                   ),
+                                  //.......................Note......................................
                                   child: Column(
                                     crossAxisAlignment:
                                     CrossAxisAlignment.start,
@@ -310,9 +316,9 @@ class _WeatherScreenState extends State<WeatherScreen> {
                                                 weatherService.cityNotes.remove(fav);
                                                 weatherService
                                                     .favoriteTemperatures
-                                                    .remove(fav);
-                                              });
-                                            },
+                                                  .remove(fav);
+                                            });
+                                          },
                                             icon: const Icon(
                                                 Icons.delete_outline,
                                                 color: Colors.black),

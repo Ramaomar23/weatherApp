@@ -14,7 +14,7 @@ class Weather {
     required this.localtime,
     required this.icon,
   });
-
+  // convert  json to object in flutter
   factory Weather.fromJson(Map<String, dynamic> json) {
     return Weather(
       city: json['location']['name'],
